@@ -12,6 +12,7 @@
       var start
         , trapper
         , currentEvent
+        , session
         , events = []
         , capturing = false;
 
@@ -23,27 +24,30 @@
         }, 1005);
       }
 
-      function schedulePush() {
+      $('#score-btn').click(function() {
+        var payload = {
+          events: events.slice()
+        };
+        $.ajax({
+          url: 'http://localhost:51712/sink',
+          type: 'POST',
+          contentType: 'application/json; charset=utf-8',
+          data: JSON.stringify(payload),
+          dataType: 'json',
+          success: function() { events = []; clearText(); },
+          error: function(e) { console.log(e); },
+          processData: false
+        });
+      });
+
+      function loop() {
         setTimeout(function() {
-          if(events && events.length > 0) {
-            console.log('pushing to server...');
-            var payload = {
-              events: events.slice()
-            };
-            console.log(payload);
-            $.ajax({
-              url: 'http://localhost:51712/sink',
-              type: 'POST',
-              contentType: 'application/json; charset=utf-8',
-              data: JSON.stringify(payload),
-              dataType: 'json',
-              success: function() { events = []; },
-              error: function(e) { console.log(e); },
-              processData: false
-            });
+          if(isComplete()) {
+            $('#score-btn').prop('disabled', false);
           }
-          schedulePush();
-        }, 5000);
+        }, 200);
+
+        loop();
       }
 
       document.addEventListener('keydown', function(event) {
@@ -53,12 +57,15 @@
           capturing = true;
           start = now();
         }
+        if(event.repeat) {
+          return;
+        }
         var t = now();
         currentEvent = {
           e: event.key,
           t: t
         };
-        });
+      });
 
       document.addEventListener('keyup', function(event) {
         var up = now();
@@ -67,7 +74,7 @@
         console.log(currentEvent);
       });
 
-      schedulePush();
+      loop();
     });
 
     function getTimer() {
@@ -81,7 +88,13 @@
     }
 
     function isComplete() {
+      var text = $('#sentinel').text().trim();
+      var input = $('#user-input').val().trim();
+      return text === input;
+    }
 
+    function clearText() {
+      $('#user-input').val('');
     }
 
   </script>
@@ -97,19 +110,8 @@
     Please submit the following input into our Freudian Psychoanalyzer.
   </p>
   <p id="sentinel">
-    For a long time I used to go to bed early. Sometimes, when I had put out my candle, my eyes would close so quickly that I had
-    not even time to say “I’m going to sleep.” And half an hour later the thought that it was time to go to sleep would awaken me;
-    I would try to put away the book which, I imagined, was still in my hands, and to blow out the light; I had been thinking all
-    the time, while I was asleep, of what I had just been reading, but my thoughts had run into a channel of their own, until I myself
-    seemed actually to have become the subject of my book: a church, a quartet, the rivalry between François I and Charles V.
-    This impression would persist for some moments after I was awake; it did not disturb my mind, but it lay like scales upon my eyes
-    and prevented them from registering the fact that the candle was no longer burning. Then it would begin to seem unintelligible, as the
-    thoughts of a former existence must be to a reincarnate spirit; the subject of my book would separate itself from me, leaving me free
-    to choose whether I would form part of it or no; and at the same time my sight would return and I would be astonished to find myself in
-    a state of darkness, pleasant and restful enough for the eyes, and even more, perhaps, for my mind, to which it appeared incomprehensible,
-    without a cause, a matter dark indeed.
+    Call me Ishmael.
   </p>
-  <textarea></textarea>
-
-	@Html.ActionLink("Go to results", "Results", "Home");
+  <textarea id="user-input"></textarea>
+  <button id="score-btn" disabled="true">Score</button>
 </div>

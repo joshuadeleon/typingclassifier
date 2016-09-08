@@ -5,11 +5,11 @@ using System.Web;
 
 namespace ML.TypingClassifier.Models
 {
-    public class MistakeCountExtractor : IFeatureExtractor
+    public class AverageDurationExtractor : IFeatureExtractor
     {
         public double Extract(Timeline timeline)
         {
-            return timeline.Events.Where(e => e.Key == "Backspace").Count();
+            throw new NotImplementedException();
         }
     }
 }
