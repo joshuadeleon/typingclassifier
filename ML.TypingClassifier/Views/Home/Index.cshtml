@@ -50,16 +50,13 @@
     }
 
   </script>
+
+
 }
-<div class="jumbotron">
-    This will be our awesome typing classifier
-</div>
-
-<div class="row">
-    Typing classifier goes here.
-
-  <textarea></textarea>
-
-
-	@Html.ActionLink("Go to results", "Results", "Home");
-</div>
+<header class="header--main text-center">
+    <h1 class="h--main">Typing Classifier</h1>
+</header>
+<main class="container body-content text-center">
+    <textarea class="input"></textarea>
+    @Html.ActionLink("Go to results", "Results", "Home", new { @class = "btn btn-primary" })
+</main>
