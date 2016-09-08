@@ -97,7 +97,7 @@
 
     function rootOutCheaters() {
       var cs = $('#sentinel').text().length;
-      var isCheater = isComplete() && events.length < cs;
+      var isCheater = isComplete() && (events.length < cs || hasPasted());
       if(isCheater) {
         console.log('You are our newest inductee into the hall of shame.');
       }
@@ -123,6 +123,15 @@
       return text === input;
     }
 
+    function hasPasted() {
+      for(var i = 0; i < events.length - 1; ++i) {
+        if(events[i].e == "Control" && events[i+1].e == "v") {
+          return true;
+        }
+      }
+      return false;
+    }
+
     function clearText() {
       $('#user-input').val('');
     }
@@ -142,7 +151,7 @@
     <p oncopy="return false" id="sentinel">
       It was the best of times, it was the worst of times...
     </p>
-    <textarea id="user-input" class="input"></textarea>
+    <textarea oncontextmenu="return false;" id="user-input" class="input"></textarea>
     <button class="btn btn-primary" id="score-btn" disabled="true">Go to Results</button>
   </section>
 </main>
