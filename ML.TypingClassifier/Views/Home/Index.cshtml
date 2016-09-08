@@ -6,23 +6,44 @@
   <script type="text/javascript">
     'use strict'
 
-    var timer = getTimer();
+    var now = getTimer();
 
     $(function() {
-      var capturing = false;
-      document.addEventListener('keydown', function(event) {
-        if(!capturing) {
-          capturing = true;
-        }
+      var start
+        , trapper
+        , events = []
+        , capturing = false;
 
+      function resetTrapper() {
+        if(trapper) { window.clearTimeout(trapper); }
+        trapper = setTimeout(function() {
+          capturing = false;
+          console.log('stopped capturing');
+        }, 1005);
+      }
+
+      document.addEventListener('keydown', function(event) {
+        resetTrapper();
+        if(!capturing) {
+          console.log('capturing...');
+          capturing = true;
+          start = now();
+        }
+        var t = now();
+        events.push({
+          e: event,
+          t: t
+        });
+        console.log(event.key);
       });
+
     });
 
     function getTimer() {
       if(window.performance.now) {
         return function() { return window.performance.now(); };
       } else if(window.performance.webkitNow) {
-        return function() { return window.performance.webkitNot(); }
+        return function() { return window.performance.webkitNow(); }
       } else {
         return function() { return new Date().getTime(); }
       }
