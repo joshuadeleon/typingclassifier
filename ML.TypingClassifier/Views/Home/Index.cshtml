@@ -6,12 +6,11 @@
   <script type="text/javascript">
     'use strict'
 
-    var now = getTimer();
-
     $(function() {
       var start
         , trapper
         , currentEvent
+        , session
         , events = []
         , capturing = false;
 
@@ -23,27 +22,30 @@
         }, 1005);
       }
 
-      function schedulePush() {
+      $('#score-btn').click(function() {
+        var payload = {
+          events: events.slice()
+        };
+        $.ajax({
+          url: 'http://localhost:51712/sink',
+          type: 'POST',
+          contentType: 'application/json; charset=utf-8',
+          data: JSON.stringify(payload),
+          dataType: 'json',
+          success: function() { events = []; clearText(); },
+          error: function(e) { console.log(e); },
+          processData: false
+        });
+      });
+
+      function loop() {
         setTimeout(function() {
-          if(events && events.length > 0) {
-            console.log('pushing to server...');
-            var payload = {
-              events: events.slice()
-            };
-            console.log(payload);
-            $.ajax({
-              url: 'http://localhost:51712/sink',
-              type: 'POST',
-              contentType: 'application/json; charset=utf-8',
-              data: JSON.stringify(payload),
-              dataType: 'json',
-              success: function() { events = []; },
-              error: function(e) { console.log(e); },
-              processData: false
-            });
+          if(isComplete()) {
+            $('#score-btn').prop('disabled', false);
           }
-          schedulePush();
-        }, 5000);
+        }, 200);
+
+        loop();
       }
 
       document.addEventListener('keydown', function(event) {
@@ -53,12 +55,15 @@
           capturing = true;
           start = now();
         }
+        if(event.repeat) {
+          return;
+        }
         var t = now();
         currentEvent = {
           e: event.key,
           t: t
         };
-        });
+      });
 
       document.addEventListener('keyup', function(event) {
         var up = now();
@@ -67,10 +72,10 @@
         console.log(currentEvent);
       });
 
-      schedulePush();
+      loop();
     });
 
-    function getTimer() {
+    function now() {
       if(window.performance.now) {
         return function() { return window.performance.now(); };
       } else if(window.performance.webkitNow) {
@@ -81,10 +86,33 @@
     }
 
     function isComplete() {
+      var text = $('#sentinel').text().trim();
+      var input = $('#user-input').val().trim();
+      return text === input;
+    }
 
+    function clearText() {
+      $('#user-input').val('');
     }
 
   </script>
+}
+<div class="jumbotron">
+    This will be our awesome typing classifier
+</div>
+<div class="row">
+    Typing classifier goes here.
+
+  <h3>Input</h3>
+  <p>
+    Please submit the following input into our Freudian Psychoanalyzer.
+  </p>
+  <p id="sentinel">
+    Call me Ishmael.
+  </p>
+  <textarea id="user-input"></textarea>
+  <button id="score-btn" disabled="true">Score</button>
+</div>
 }
 <header class="header--main">
     <div class="container body-content">
