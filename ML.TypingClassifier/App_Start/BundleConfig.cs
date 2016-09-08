@@ -21,11 +21,13 @@ namespace ML.TypingClassifier
 
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
 					  "~/Scripts/bootstrap.js",
-					  "~/Scripts/respond.js"));
+                      "~/Scripts/c3-0.4.11/c3.js",
+                      "~/Scripts/respond.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
-					  "~/Content/bootstrap.css",
-					  "~/Content/site.css"));
+					  "~/Content/css/bootstrap.css",
+                      "~/Scripts/c3-0.4.11/c3.min.css",
+                      "~/Content/css/site.css"));
 		}
 	}
 }
