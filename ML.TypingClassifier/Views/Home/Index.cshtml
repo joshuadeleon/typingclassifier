@@ -6,14 +6,15 @@
   <script type="text/javascript">
     'use strict'
 
-    var now = getTimer();
-
     $(function() {
       var start
         , trapper
         , currentEvent
+        , payload = {}
         , events = []
         , capturing = false;
+
+      var now = getTimer();
 
       function resetTrapper() {
         if(trapper) { window.clearTimeout(trapper); }
@@ -23,27 +24,36 @@
         }, 1005);
       }
 
-      function schedulePush() {
+      $('#score-btn').click(function() {
+        if(rootOutCheaters()) {
+          alert('Thanks for cheating. You are our newest inductee into the hall of shame.');
+          return;
+        }
+        payload.events = events.slice();
+        payload.handle = $('#handle').val();
+        payload.email = $('#email').val();
+        if(!isValid(payload)) {
+          return;
+        }
+        $.ajax({
+          url: 'http://localhost:51712/sink',
+          type: 'POST',
+          contentType: 'application/json; charset=utf-8',
+          data: JSON.stringify(payload),
+          dataType: 'json',
+          success: function() { events = []; clearText(); },
+          error: function(e) { console.log(e); },
+          processData: false
+        });
+      });
+
+      function loop() {
         setTimeout(function() {
-          if(events && events.length > 0) {
-            console.log('pushing to server...');
-            var payload = {
-              events: events.slice()
-            };
-            console.log(payload);
-            $.ajax({
-              url: 'http://localhost:51712/sink',
-              type: 'POST',
-              contentType: 'application/json; charset=utf-8',
-              data: JSON.stringify(payload),
-              dataType: 'json',
-              success: function() { events = []; },
-              error: function(e) { console.log(e); },
-              processData: false
-            });
+          if(isComplete()) {
+            $('#score-btn').prop('disabled', false);
           }
-          schedulePush();
-        }, 5000);
+          loop();
+        }, 200);
       }
 
       document.addEventListener('keydown', function(event) {
@@ -53,12 +63,15 @@
           capturing = true;
           start = now();
         }
+        if(event.repeat) {
+          return;
+        }
         var t = now();
         currentEvent = {
           e: event.key,
           t: t
         };
-        });
+      });
 
       document.addEventListener('keyup', function(event) {
         var up = now();
@@ -67,7 +80,7 @@
         console.log(currentEvent);
       });
 
-      schedulePush();
+      loop();
     });
 
     function getTimer() {
@@ -80,35 +93,64 @@
       }
     }
 
-    function isComplete() {
+    function rootOutCheaters() {
+      var cs = $('#sentinel').text().length;
+      var isCheater = isComplete() && events.length < cs;
+      if(isCheater) {
+        console.log('You are our newest inductee into the hall of shame.');
+      }
+      return isCheater;
+    }
 
+    function isValid() {
+      var isValid = validateById('#handle') && validateById('#email');
+      return isValid;
+    }
+
+    function validateById(id) {
+      if($(id).val().length == 0) {
+        $(id).addClass('error');
+        return false;
+      }
+      return true;
+    }
+
+    function isComplete() {
+      var text = $('#sentinel').text().trim();
+      var input = $('#user-input').val().trim();
+      return text === input;
+    }
+
+    function clearText() {
+      $('#user-input').val('');
     }
 
   </script>
 }
-<div class="jumbotron">
-    This will be our awesome typing classifier
-</div>
-<div class="row">
-    Typing classifier goes here.
-
-  <h3>Input</h3>
-  <p>
-    Please submit the following input into our Freudian Psychoanalyzer.
-  </p>
-  <p id="sentinel">
-    For a long time I used to go to bed early. Sometimes, when I had put out my candle, my eyes would close so quickly that I had
-    not even time to say “I’m going to sleep.” And half an hour later the thought that it was time to go to sleep would awaken me;
-    I would try to put away the book which, I imagined, was still in my hands, and to blow out the light; I had been thinking all
-    the time, while I was asleep, of what I had just been reading, but my thoughts had run into a channel of their own, until I myself
-    seemed actually to have become the subject of my book: a church, a quartet, the rivalry between François I and Charles V.
-    This impression would persist for some moments after I was awake; it did not disturb my mind, but it lay like scales upon my eyes
-    and prevented them from registering the fact that the candle was no longer burning. Then it would begin to seem unintelligible, as the
-    thoughts of a former existence must be to a reincarnate spirit; the subject of my book would separate itself from me, leaving me free
-    to choose whether I would form part of it or no; and at the same time my sight would return and I would be astonished to find myself in
-    a state of darkness, pleasant and restful enough for the eyes, and even more, perhaps, for my mind, to which it appeared incomprehensible,
-    without a cause, a matter dark indeed.
-  </p>
-  <textarea></textarea>
-	@Html.ActionLink("Go to results", "Results", "Home");
-</div>
+<main class="container body-content">
+    <section>
+        <h4>Please enter a handle and a valid email address:</h4>
+    <label>Handle</label>
+    <input id="#handle" type="text" value="" />
+    <label>Email</label>
+    <input id="#email" type="email" />
+    </section>
+    <section>
+    <h4>Please submit the following input into our Freudian Psychoanalyzer:</h4>
+        <p oncopy="return false" id="sentinel">
+            For a long time I used to go to bed early. Sometimes, when I had put out my candle, my eyes would close so quickly that I had
+            not even time to say “I’m going to sleep.” And half an hour later the thought that it was time to go to sleep would awaken me;
+            I would try to put away the book which, I imagined, was still in my hands, and to blow out the light; I had been thinking all
+            the time, while I was asleep, of what I had just been reading, but my thoughts had run into a channel of their own, until I myself
+            seemed actually to have become the subject of my book: a church, a quartet, the rivalry between François I and Charles V.
+            This impression would persist for some moments after I was awake; it did not disturb my mind, but it lay like scales upon my eyes
+            and prevented them from registering the fact that the candle was no longer burning. Then it would begin to seem unintelligible, as the
+            thoughts of a former existence must be to a reincarnate spirit; the subject of my book would separate itself from me, leaving me free
+            to choose whether I would form part of it or no; and at the same time my sight would return and I would be astonished to find myself in
+            a state of darkness, pleasant and restful enough for the eyes, and even more, perhaps, for my mind, to which it appeared incomprehensible,
+            without a cause, a matter dark indeed.
+    </p>
+    <textarea id="user-input" class="input"></textarea>
+    <button class="btn btn-primary" id="score-btn" disabled="true">Go to Results</button>
+    </section>
+</main>
