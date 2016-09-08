@@ -1,46 +1,67 @@
-﻿body {
-    font-family: 'Roboto', sans-serif;
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿/*************************************/
+/***** base styles  & typography *******/
+/*************************************/
+
+body {
+    font-family: 'Cousine', monospace;
 }
 
 h1, h2, h3, h4{
-    font-family: 'Mate', serif;
+    font-family: 'Cousine', monospace;
     font-weight:bold;
     letter-spacing:1px;
 }
 
-textarea.input{
+.h--main{
+font-size:25px;
+}
+
+/*************************************/
+/************ components ************/
+/*************************************/
+
+.input{
     display:block;
     width:100%;
     max-width:none;
-}
-
-
-.h--main{
-font-size:40px;
+    min-height:350px;
 }
 
 .header--main{
-    padding:20px;
+    margin-bottom:30px;
+    background:#444;
+    padding:3px;
+    color:#eee;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.btn{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.btn-primary{
+    background:#F95759;
+    border:none;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+/*************************************/
+/************ utility classes ************/
+/*************************************/
+
+.margin--small{
+    10px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.margin--medium{
+    20px;
 }
+
+.margin--large{
+    30px;
+}
+
+
+/*************************************/
+/************ page sections ************/
+/*************************************/
+
+
