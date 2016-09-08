@@ -97,23 +97,6 @@
 
   </script>
 }
-<div class="jumbotron">
-    This will be our awesome typing classifier
-</div>
-<div class="row">
-    Typing classifier goes here.
-
-  <h3>Input</h3>
-  <p>
-    Please submit the following input into our Freudian Psychoanalyzer.
-  </p>
-  <p id="sentinel">
-    Call me Ishmael.
-  </p>
-  <textarea id="user-input"></textarea>
-  <button id="score-btn" disabled="true">Score</button>
-</div>
-}
 <header class="header--main">
     <div class="container body-content">
         <h1 class="h--main">Typing Classifier</h1>
@@ -134,6 +117,6 @@
         a state of darkness, pleasant and restful enough for the eyes, and even more, perhaps, for my mind, to which it appeared incomprehensible,
         without a cause, a matter dark indeed.
     </p>
-    <textarea class="input"></textarea>
-    @Html.ActionLink("Go to results", "Results", "Home", new { @class = "btn btn-primary" })
+    <textarea id="user-input" class="input"></textarea>
+    <button class="btn btn-primary" id="score-btn" disabled="true">Go to Results</button>
 </main>
