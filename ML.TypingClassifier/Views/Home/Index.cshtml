@@ -11,6 +11,7 @@
     $(function() {
       var start
         , trapper
+        , currentEvent
         , events = []
         , capturing = false;
 
@@ -22,6 +23,29 @@
         }, 1005);
       }
 
+      function schedulePush() {
+        setTimeout(function() {
+          if(events && events.length > 0) {
+            console.log('pushing to server...');
+            var payload = {
+              events: events.slice()
+            };
+            console.log(payload);
+            $.ajax({
+              url: 'http://localhost:51712/sink',
+              type: 'POST',
+              contentType: 'application/json; charset=utf-8',
+              data: JSON.stringify(payload),
+              dataType: 'json',
+              success: function() { events = []; },
+              error: function(e) { console.log(e); },
+              processData: false
+            });
+          }
+          schedulePush();
+        }, 5000);
+      }
+
       document.addEventListener('keydown', function(event) {
         resetTrapper();
         if(!capturing) {
@@ -30,13 +54,20 @@
           start = now();
         }
         var t = now();
-        events.push({
-          e: event,
+        currentEvent = {
+          e: event.key,
           t: t
-        });
-        console.log(event.key);
+        };
       });
 
+      document.addEventListener('keyup', function(event) {
+        var up = now();
+        currentEvent.d = up - currentEvent.t;
+        events.push(currentEvent);
+        console.log(currentEvent);
+      });
+
+      schedulePush();
     });
 
     function getTimer() {

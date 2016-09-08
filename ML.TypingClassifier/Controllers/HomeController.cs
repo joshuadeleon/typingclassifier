@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ML.TypingClassifier.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -31,5 +32,12 @@ namespace ML.TypingClassifier.Controllers
 		{
 			return View();
 		}
+
+        [HttpPost]
+        
+        public ActionResult KeySink(Timeline data)
+        {
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 	}
 }
