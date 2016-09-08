@@ -11,6 +11,7 @@ namespace ML.TypingClassifier.Controllers
     [RoutePrefix("sink")]
     public class SinkController : ApiController
     {
+
         [Route("")]
         public IHttpActionResult Get()
         {
