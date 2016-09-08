@@ -11,6 +11,7 @@ namespace ML.TypingClassifier.Controllers
     [RoutePrefix("sink")]
     public class SinkController : ApiController
     {
+
         [Route("")]
         public IHttpActionResult Get()
         {
@@ -20,6 +21,8 @@ namespace ML.TypingClassifier.Controllers
         [Route("")]
         public IHttpActionResult Post(Timeline data)
         {
+            
+
             return Ok(data);
         }
     }
