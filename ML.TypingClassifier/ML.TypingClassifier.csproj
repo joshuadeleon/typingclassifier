@@ -166,8 +166,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\IFeatureExtractor.cs" />
     <Compile Include="Models\KeyEvent.cs" />
+    <Compile Include="Models\MistakeCountExtractor.cs" />
     <Compile Include="Models\Timeline.cs" />
+    <Compile Include="Models\WordsPerMinuteExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
