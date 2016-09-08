@@ -1,11 +1,44 @@
 ﻿@{
     ViewBag.Title = "Typing Classifier";
 }
+@section scripts
+{
+  <script type="text/javascript">
+    'use strict'
 
+    var timer = getTimer();
+
+    $(function() {
+      var capturing = false;
+      document.addEventListener('keydown', function(event) {
+        if(!capturing) {
+          capturing = true;
+        }
+
+      });
+    });
+
+    function getTimer() {
+      if(window.performance.now) {
+        return function() { return window.performance.now(); };
+      } else if(window.performance.webkitNow) {
+        return function() { return window.performance.webkitNot(); }
+      } else {
+        return function() { return new Date().getTime(); }
+      }
+    }
+
+  </script>
+}
 <div class="jumbotron">
     This will be our awesome typing classifier
 </div>
 
 <div class="row">
     Typing classifier goes here.
+
+  <textarea></textarea>
+
+
+	@Html.ActionLink("Go to results", "Results", "Home");
 </div>

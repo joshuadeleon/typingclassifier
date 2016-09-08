@@ -26,5 +26,10 @@ namespace ML.TypingClassifier.Controllers
 
 			return View();
 		}
+
+		public ActionResult Results()
+		{
+			return View();
+		}
 	}
 }
