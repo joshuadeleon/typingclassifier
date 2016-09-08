@@ -54,22 +54,38 @@ font-size:25px;
     border:none;
 }
 
+section{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
 /*************************************/
 /************ utility classes ************/
 /*************************************/
 
 .margin--small{
-    10px;
+    margin:10px;
 }
 
 .margin--medium{
-    20px;
+    margin:20px;
 }
 
 .margin--large{
-    30px;
+    margin:20px;
 }
 
+.padding--small{
+    margin:10px;
+}
+
+.padding--medium{
+    margin:20px;
+}
+
+.padding--large{
+    margin:20px;
+}
 
 /*************************************/
 /************ page sections ************/
