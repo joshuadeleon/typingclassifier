@@ -49,7 +49,9 @@
 
       function loop() {
         setTimeout(function() {
-          if(isComplete()) {
+          var done = isComplete();
+          console.log(done);
+          if(done) {
             $('#score-btn').prop('disabled', false);
           }
           loop();
@@ -129,7 +131,7 @@
 }
 <main class="container body-content">
     <section>
-        <h4>Please enter a handle and a valid email address:</h4>
+      <h4>Please enter a handle and a valid email address:</h4>
     <label>Handle</label>
     <input id="#handle" type="text" value="" />
     <label>Email</label>
@@ -138,7 +140,7 @@
   <section>
     <h4>Please submit the following input into our Freudian Psychoanalyzer:</h4>
     <p oncopy="return false" id="sentinel">
-      For a long time I used to go to bed early. Sometimes, when I had put out my candle, my eyes would close so quickly that I had not even time to say “I’m going to sleep.”
+      It was the best of times, it was the worst of times...
     </p>
     <textarea id="user-input" class="input"></textarea>
     <button class="btn btn-primary" id="score-btn" disabled="true">Go to Results</button>
