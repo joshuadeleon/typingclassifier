@@ -190,6 +190,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ML\ClusterMethods.cs" />
+    <Compile Include="Models\ClusterResult.cs" />
     <Compile Include="Models\FeatureExtractor.cs" />
     <Compile Include="Models\KeyEvent.cs" />
     <Compile Include="Models\Timeline.cs" />
