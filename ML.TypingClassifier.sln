@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML.TypingClassifier", "ML.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML.TypingClassifier.Tests", "ML.TypingClassifier.Tests\ML.TypingClassifier.Tests.csproj", "{6A72E58E-E79D-4FDD-82DB-5B2636FC49A2}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ML.TypingClassifierDB", "ML.TypingClassifierDB\ML.TypingClassifierDB.sqlproj", "{A6B9B2B1-148D-4748-8F67-2CB49EE27148}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +21,6 @@ Global
 		{6A72E58E-E79D-4FDD-82DB-5B2636FC49A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A72E58E-E79D-4FDD-82DB-5B2636FC49A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A72E58E-E79D-4FDD-82DB-5B2636FC49A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6B9B2B1-148D-4748-8F67-2CB49EE27148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6B9B2B1-148D-4748-8F67-2CB49EE27148}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6B9B2B1-148D-4748-8F67-2CB49EE27148}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A6B9B2B1-148D-4748-8F67-2CB49EE27148}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6B9B2B1-148D-4748-8F67-2CB49EE27148}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6B9B2B1-148D-4748-8F67-2CB49EE27148}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
