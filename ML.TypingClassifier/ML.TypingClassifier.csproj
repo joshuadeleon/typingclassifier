@@ -223,7 +223,6 @@
     <Content Include="Scripts\c3-0.4.11\bower.json" />
     <Content Include="Scripts\c3-0.4.11\component.json" />
     <Content Include="Scripts\c3-0.4.11\CONTRIBUTING.md" />
-    <Content Include="Scripts\c3-0.4.11\d3.min.js" />
     <Content Include="Scripts\c3-0.4.11\extensions\exporter\config.json" />
     <Content Include="Scripts\c3-0.4.11\Gruntfile.coffee" />
     <Content Include="Scripts\c3-0.4.11\htdocs\data\c3_test.csv" />
