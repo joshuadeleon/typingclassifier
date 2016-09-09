@@ -185,17 +185,21 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SinkController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ML\ClusterMethods.cs" />
+    <Compile Include="ML\Engine.cs" />
+    <Compile Include="Models\Classification.cs" />
     <Compile Include="Models\ClusterResult.cs" />
     <Compile Include="Models\DataAccess.cs" />
     <Compile Include="Models\FeatureExtractor.cs" />
     <Compile Include="Models\KeyEvent.cs" />
     <Compile Include="Models\Sample.cs" />
+    <Compile Include="Models\Sentinel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -474,7 +478,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
