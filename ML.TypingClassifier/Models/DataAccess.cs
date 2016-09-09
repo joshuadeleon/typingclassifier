@@ -98,7 +98,7 @@ namespace ML.TypingClassifier.Models
         {
             var cmd = existingUser == null ?
                 new SqlCommand(SampleMapper.Insert) :
-                new SqlCommand(SampleMapper.Insert);
+                new SqlCommand(SampleMapper.Update);
             
             cmd.Parameters.AddRange(new[]
             {
