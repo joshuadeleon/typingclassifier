@@ -5,19 +5,32 @@
 {
   <script type="text/javascript">
     $(function() {
-      var points;
+      var points
+        , features;
 
       $.getJSON('/sink/points', function(data) {
         points = data;
+        features = {
+          wpm: ['WPM'].concat(points[0].Values),
+          backspaces: ['Backspaces'].concat(points[1].Values),
+          deletes: ['Deletes'].concat(points[2].Values),
+          averageKeyPressDuration: ['AverageKeyPressDuration'].concat(points[3].Values),
+          averageTimeBetweenKeystrokes: ['AverageTimeBetweenKeystrokes'].concat(points[4].Values)
+        };
         console.log(data);
+        console.log(features);
+        render();
       });
-      /*
-      var plot = c3.generate({
-        bindto: '#chart',
-        data: {
 
-        }
-      });*/
+      function render() {
+        c3.generate({
+          bindto: '#chart',
+          data: {
+            columns: [features.wpm, features.averageKeyPressDuration],
+            type: 'scatter'
+          },
+        });
+      }      
     });
   </script>
 }

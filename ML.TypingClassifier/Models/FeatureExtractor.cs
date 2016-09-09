@@ -40,7 +40,7 @@ namespace ML.TypingClassifier.Models
         public static double WPM(Sample timeline)
         {
             var spaces = timeline.Events.Where(e => e.Key == " ").Count();
-            var totalTime = timeline.Events.Last().Timestamp;
+            var totalTime = timeline.Events.Last().Timestamp * 60000;
             return (spaces + 1) / totalTime;
         }
 
