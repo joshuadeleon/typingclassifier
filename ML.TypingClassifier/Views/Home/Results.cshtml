@@ -6,7 +6,8 @@
   <script type="text/javascript">
     $(function() {
       var points
-        , features;
+        , features
+        , plot;
 
       $.getJSON('/sink/points', function(data) {
         points = data;
@@ -19,11 +20,11 @@
         };
         console.log(data);
         console.log(features);
-        render();
+        plot = render();
       });
 
       function render() {
-        c3.generate({
+        return c3.generate({
           bindto: '#chart',
           data: {
             columns: [features.wpm, features.averageKeyPressDuration],
