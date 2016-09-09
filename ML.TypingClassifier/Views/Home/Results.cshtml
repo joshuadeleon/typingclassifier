@@ -3,37 +3,6 @@
 }
 @section scripts 
 {
-  <script type="text/javascript">
-    $(function() {
-      var points
-        , features
-        , plot;
-
-      $.getJSON('/sink/points', function(data) {
-        points = data;
-        features = {
-          wpm: ['WPM'].concat(points[0].Values),
-          backspaces: ['Backspaces'].concat(points[1].Values),
-          deletes: ['Deletes'].concat(points[2].Values),
-          averageKeyPressDuration: ['AverageKeyPressDuration'].concat(points[3].Values),
-          averageTimeBetweenKeystrokes: ['AverageTimeBetweenKeystrokes'].concat(points[4].Values)
-        };
-        console.log(data);
-        console.log(features);
-        plot = render();
-      });
-
-      function render() {
-        return c3.generate({
-          bindto: '#chart',
-          data: {
-            columns: [features.wpm, features.averageKeyPressDuration],
-            type: 'scatter'
-          },
-        });
-      }      
-    });
-  </script>
 }
 
 <main class="container body-content">
@@ -42,19 +11,19 @@
     <section>
         <span>I want to see</span>
         <select id="chart-x-axis">
-            <option value="WPM">Words per minute</option>
-            <option value="Backspaces">Backspaces</option>
-            <option value="Deletes">Deletion Key Frequency</option>
-            <option value="AverageKeyPressDuration">Avg Keypress Duration</option>
-            <option value="AverageTimeBetweenKeystroke">Avg Time Between Keystrokes</option>
+            <option value="wpm">Words per minute</option>
+            <option value="backspaces">Backspaces</option>
+            <option value="deletes">Deletion Key Frequency</option>
+            <option value="averageKeyPressDuration">Avg Keypress Duration</option>
+            <option value="averageTimeBetweenKeystrokes">Avg Time Between Keystrokes</option>
         </select>
         <span>versus</span>
         <select id="chart-y-axis">
-			<option value="WPM">Words per minute</option>
-			<option value="Backspaces">Backspaces</option>
-			<option value="Deletes">Deletion Key Frequency</option>
-			<option value="AverageKeyPressDuration">Avg Keypress Duration</option>
-			<option value="AverageTimeBetweenKeystroke">Avg Time Between Keystrokes</option>
+			<option value="wpm">Words per minute</option>
+			<option value="backspaces">Backspaces</option>
+			<option value="deletes">Deletion Key Frequency</option>
+			<option value="averageKeyPressDuration">Avg Keypress Duration</option>
+			<option value="averageTimeBetweenKeystrokes">Avg Time Between Keystrokes</option>
         </select>
     </section>
 </main>
