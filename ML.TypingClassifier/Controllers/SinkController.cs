@@ -20,19 +20,19 @@ namespace ML.TypingClassifier.Controllers
             _dataAccess = new DataAccess(Constants.ConnectionString);
         }
 
-        [Route("")]
-        public IHttpActionResult Get()
+        [Route("{email?}")]
+        public IHttpActionResult GetByEmail(string email = "")
         {
-            return Ok(_dataAccess.All());
-        }
-
-        [Route("{email}")]
-        public IHttpActionResult GetByEmail(string email)
-        {
+            if (email == "") return Ok(_dataAccess.All());
             var sample = _dataAccess.Single(email);
+            var features = FeatureExtractor.Default(sample);
             if (sample == null)
                 return NotFound();
-            return Ok(sample);
+            return Ok(new
+            {
+                Sample = sample,
+                Features = features
+            });
         }
 
         [Route("")]
