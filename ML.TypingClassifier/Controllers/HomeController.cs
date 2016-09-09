@@ -20,9 +20,8 @@ namespace ML.TypingClassifier.Controllers
 		{
             var sentinel = new Sentinel
             {
-                Author = "Charles Dickens",
-                Book = "A Tale of Two Cities",
-                Text = "It was the best of times, it was the worst of times..."
+                Text = "A green plastic watering can, for a fake chinese rubber plant, in the fake plastic earth. That she bought from a rubber man, in a town full of rubber plans, " +
+                    "to get rid of itself"
             };
             return View(sentinel);
 		}
@@ -35,7 +34,7 @@ namespace ML.TypingClassifier.Controllers
                 Book = "The Waves",
                 Text = 
                     "The sun had not yet risen. The sea was indistinguishable from the sky, except that the sea was slightly creased as if a cloth " +
-                    "had wrinkles in it. Gradually as the sky whitened a dark line lay on the horizon diving the sea from the sky and the grey cloth became barred " +
+                    "had wrinkles in it. Gradually as the sky whitened a dark line lay on the horizon dividing the sea from the sky and the grey cloth became barred " +
                     "with thick strokes moving, one after another, beneath the surface, following each other, pursuing each other, perpetually. As they neared " + 
                     "the shore each bar rose, heaped itself, broke and swept a thin veil of white water across the sand. The wave paused, and then drew out again, sighing " + 
                     "like a sleeper whose breath comes and goes unconsciously."
