@@ -49,5 +49,12 @@ namespace ML.TypingClassifier.Controllers
             var classification = Engine.Instance.RunKMeans(clusters);
             return Ok(classification);
         }
+
+        [Route("invalidate")]
+        public IHttpActionResult Post()
+        {
+            Engine.Instance.Refresh();
+            return Ok();
+        }
     }
 }
