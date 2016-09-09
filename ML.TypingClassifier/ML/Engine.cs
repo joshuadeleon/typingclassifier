@@ -26,11 +26,7 @@ namespace ML.TypingClassifier.ML
         {
             var history = _data.All();
             _size = history.Count;
-            _matrix = new double[_size + 1][];
-            for (int i = 0; i < _matrix.Length; i++)
-            {
-                _matrix[i] = FeatureExtractor.Default(history[i]);
-            }
+            _matrix = history.Select(FeatureExtractor.Default).ToArray();
         }
 
         public Classification RunKMeans(int clusters)
