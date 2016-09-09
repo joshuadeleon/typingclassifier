@@ -12,7 +12,8 @@ namespace ML.TypingClassifier.Models
         public readonly static string Insert =
             "INSERT INTO dbo.Users (Handle, Email, RawData) VALUES(@handle, @email, @rawData);";
         public readonly static string Update =
-            "UPDATE dbo.Users SET Handle = @handle, RawData = @rawData;";
+            "UPDATE dbo.Users SET Handle = @handle, RawData = @rawData " +
+            "WHERE Email = @email;";
 
         public static Sample Read(SqlDataReader reader)
         {
@@ -95,27 +96,16 @@ namespace ML.TypingClassifier.Models
 
         private static SqlCommand PrepareCommand(Sample sample, string jsonEvents, Sample existingUser)
         {
-            SqlCommand cmd;
-            if (existingUser == null)
+            var cmd = existingUser == null ?
+                new SqlCommand(SampleMapper.Insert) :
+                new SqlCommand(SampleMapper.Insert);
+            
+            cmd.Parameters.AddRange(new[]
             {
-                cmd = new SqlCommand(SampleMapper.Insert);
-                cmd.Parameters.AddRange(new[]
-                {
-                    new SqlParameter("@handle", sample.Handle),
-                    new SqlParameter("@email", sample.Email),
-                    new SqlParameter("@rawData", jsonEvents)
-                });
-            }
-            else
-            {
-                cmd = new SqlCommand(SampleMapper.Update);
-                cmd.Parameters.AddRange(new[]
-                {
-                    new SqlParameter("@handle", sample.Handle),
-                    new SqlParameter("@rawData", jsonEvents)
-                });
-            }
-
+                new SqlParameter("@handle", sample.Handle),
+                new SqlParameter("@email", sample.Email),
+                new SqlParameter("@rawData", jsonEvents)
+            });
             return cmd;
         }
     }
