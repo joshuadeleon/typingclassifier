@@ -1,10 +1,5 @@
-﻿using ML.TypingClassifier.Models;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using ML.TypingClassifier.ML;
+using ML.TypingClassifier.Models;
 using System.Web.Http;
 
 namespace ML.TypingClassifier.Controllers
@@ -12,14 +7,11 @@ namespace ML.TypingClassifier.Controllers
     [RoutePrefix("sink")]
     public class SinkController : ApiController
     {
-        private static readonly string ConnString =
-            "Server=tcp:zg8hk2j3i5.database.windows.net,1433;Database=typingcAFGz4D1Xe;User ID=classifier@zg8hk2j3i5;Password=M3talt0ad;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
-
         private readonly DataAccess _dataAccess;
 
         public SinkController()
         {
-            _dataAccess = new DataAccess(ConnString);
+            _dataAccess = new DataAccess(Constants.ConnectionString);
         }
 
         [Route("")]
@@ -42,6 +34,20 @@ namespace ML.TypingClassifier.Controllers
         {
             _dataAccess.Add(data);
             return Ok(data);
+        }
+
+        [Route("kmeans/{clusters}")]
+        public IHttpActionResult Get(int clusters)
+        {
+            var classification = Engine.Instance.RunKMeans(clusters);
+            return Ok(classification);
+        }
+
+        [Route("kmeans")]
+        public IHttpActionResult Post(int clusters)
+        {
+            var classification = Engine.Instance.RunKMeans(clusters);
+            return Ok(classification);
         }
     }
 }

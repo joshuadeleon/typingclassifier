@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ML.TypingClassifier.Models.Sentinel
+@{
     ViewBag.Title = "Typing Classifier";
 }
 @section scripts
@@ -37,7 +38,7 @@
         payload.email = document.getElementById('email').value;
         payload.events = events.slice();
         $.ajax({
-          url: 'http://localhost:51712/sink',
+          url: 'http://typingclassifier.azurewebsites.net/sink',
           type: 'POST',
           contentType: 'application/json; charset=utf-8',
           data: JSON.stringify(payload),
@@ -97,7 +98,6 @@
 
     function rootOutCheaters(events) {
       var cs = $('#sentinel').text().trim().length;
-      console.log(events.length);
       var isCheater = isComplete() && (events.length < cs || hasPasted(events));
       if(isCheater) {
         console.log('You are our newest inductee into the hall of shame.');
@@ -151,7 +151,7 @@
   <section>
     <h4>Please submit the following input into our Freudian Psychoanalyzer:</h4>
     <p oncopy="return false" id="sentinel">
-      It was the best of times, it was the worst of times...
+      @Model.Text
     </p>
     <textarea oncontextmenu="return false;" id="user-input" class="input"></textarea>
     <button class="btn btn-primary" id="score-btn" disabled="true">Go to Results</button>
