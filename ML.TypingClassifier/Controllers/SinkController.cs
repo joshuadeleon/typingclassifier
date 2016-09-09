@@ -41,7 +41,7 @@ namespace ML.TypingClassifier.Controllers
         public IHttpActionResult Post(Sample data)
         {
             _dataAccess.Add(data);
-            return Ok();
+            return Ok(data);
         }
     }
 }
