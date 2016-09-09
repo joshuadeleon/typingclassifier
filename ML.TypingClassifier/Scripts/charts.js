@@ -55,11 +55,11 @@
 	//	Redraw the scatter plot
 	function redraw(xaxis, yaxis, oldxaxis, oldyaxis) {
 		var idsToRemove = [];
-		if (oldxaxis !== null || oldxaxis !== undefined) {
+		if (oldxaxis !== null && oldxaxis !== undefined) {
 			idsToRemove.push(oldxaxis[0]);
 		}
 
-		if (oldyaxis != null || oldyaxis !== undefined) {
+		if (oldyaxis != null && oldyaxis !== undefined) {
 			idsToRemove.push(oldyaxis[0]);
 		}
 
