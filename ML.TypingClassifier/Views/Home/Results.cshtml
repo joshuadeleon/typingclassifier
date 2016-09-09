@@ -5,7 +5,18 @@
 {
   <script type="text/javascript">
     $(function() {
+      var points;
 
+      $.getJSON('/sink/points', function(data) {
+
+      });
+
+      var plot = c3.generate({
+        bindto: '#chart',
+        data: {
+
+        }
+      });
     });
   </script>
 }

@@ -2,6 +2,7 @@
 using ML.TypingClassifier.Models;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace ML.TypingClassifier.ML
 {
@@ -14,7 +15,7 @@ namespace ML.TypingClassifier.ML
         public static Engine Instance { get { return Thunk.Value; } }
 
         private readonly DataAccess _data;
-        private object _sync = new object();
+        private ReaderWriterLock _rwlock = new ReaderWriterLock();
         private int _size;
         private double[][] _matrix;
 		private Classification _clusters;
@@ -36,22 +37,45 @@ namespace ML.TypingClassifier.ML
 
         public void Refresh()
         {
-            lock (_sync)
+            try
             {
+                _rwlock.AcquireWriterLock(60000);
                 Initialize();
+            }
+            finally
+            {
+                _rwlock.ReleaseWriterLock();
+            }
+        }
+
+        public double[][] Matrix()
+        {
+            try
+            {
+                _rwlock.AcquireReaderLock(60000);
+                return _matrix;
+            }
+            finally
+            {
+                _rwlock.ReleaseReaderLock();
             }
         }
 
         public Classification RunKMeans(int clusters)
         {
-            lock (_sync)
+            try
             {
+                _rwlock.AcquireReaderLock(60000);
                 var kmeans = new KMeans(clusters);
                 var clusterCollection = kmeans.Learn(_matrix);
                 return new Classification
                 {
                     Clusters = clusterCollection
                 };
+            }
+            finally
+            {
+                _rwlock.ReleaseReaderLock();
             }
         }
     }
