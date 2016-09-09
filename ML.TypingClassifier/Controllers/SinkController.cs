@@ -18,7 +18,6 @@ namespace ML.TypingClassifier.Controllers
 		public SinkController()
         {
             _dataAccess = new DataAccess(Constants.ConnectionString);
-			Task.Run(() => PeriodicRefesh(CancellationToken.None));
         }
 
         [Route("")]
@@ -40,7 +39,15 @@ namespace ML.TypingClassifier.Controllers
         public IHttpActionResult Post(Sample data)
         {
             _dataAccess.Add(data);
-			Interlocked.Increment(ref _currentSubmissionCount);					
+			
+			if (_currentSubmissionCount > REFRESH_CLUSTERS) {
+				Interlocked.Exchange(ref _currentSubmissionCount,0);
+				Task.Run(() => Engine.Instance.Refresh());
+			}
+			else {
+				Interlocked.Increment(ref _currentSubmissionCount);
+			}
+							
             return Ok(data);
         }
 
@@ -90,19 +97,5 @@ namespace ML.TypingClassifier.Controllers
         {
             "WPM", "Backspaces", "Deletes", "AverageKeyPressDuration", "AverageTimeBetweenKeystrokes"
         };
-
-		/// <summary>
-		/// Periodically re-calculates K-means
-		/// </summary>
-		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
-		private async Task PeriodicRefesh(CancellationToken cancellationToken)
-		{
-			while (_currentSubmissionCount > REFRESH_CLUSTERS)
-			{
-				await Task.Run(() => Engine.Instance.Refresh());
-				Interlocked.Exchange(ref _currentSubmissionCount, 0);
-			}
-		}
 	}
 }

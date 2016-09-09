@@ -81,11 +81,7 @@ namespace ML.TypingClassifier.Controllers
 
 		public ActionResult Results(string email)
 		{
-			var allData = _dataAccess.All();
-			var userData = allData.FirstOrDefault(x => x.Email == email);
-			var matrix = allData.Select(FeatureExtractor.Default).ToArray();
-			var profileResults = new ProfileResults(matrix, userData);
-			return View(profileResults);
+			return View();
 		}
 	}
 }
