@@ -32,12 +32,5 @@ namespace ML.TypingClassifier.Controllers
 		{
 			return View();
 		}
-
-        [HttpPost]
-        
-        public ActionResult KeySink(Timeline data)
-        {
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
 	}
 }

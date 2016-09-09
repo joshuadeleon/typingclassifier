@@ -12,21 +12,36 @@ namespace ML.TypingClassifier.Controllers
     [RoutePrefix("sink")]
     public class SinkController : ApiController
     {
-        private static readonly ConcurrentDictionary<string, double[]> _map =
-            new ConcurrentDictionary<string, double[]>();
+        private static readonly string ConnString =
+            "Server=tcp:zg8hk2j3i5.database.windows.net,1433;Database=typingcAFGz4D1Xe;User ID=classifier@zg8hk2j3i5;Password=M3talt0ad;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;";
+
+        private readonly DataAccess _dataAccess;
+
+        public SinkController()
+        {
+            _dataAccess = new DataAccess(ConnString);
+        }
 
         [Route("")]
         public IHttpActionResult Get()
         {
-            return Ok();
+            return Ok(_dataAccess.All());
+        }
+
+        [Route("{email}")]
+        public IHttpActionResult GetByEmail(string email)
+        {
+            var sample = _dataAccess.Single(email);
+            if (sample == null)
+                return NotFound();
+            return Ok(sample);
         }
 
         [Route("")]
-        public IHttpActionResult Post(Timeline data)
+        public IHttpActionResult Post(Sample data)
         {
-            double[] features = FeatureExtractor.Default(data);
-            
-            return Ok(data);
+            _dataAccess.Add(data);
+            return Ok();
         }
     }
 }

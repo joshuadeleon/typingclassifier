@@ -25,15 +25,16 @@
       }
 
       $('#score-btn').click(function() {
-        if(rootOutCheaters()) {
+        if(rootOutCheaters(events)) {
           alert('Thanks for cheating. You are our newest inductee into the hall of shame.');
           return;
         }
         if(!isValid()) {
+          console.log('Please include a handle and an email');
           return;
         }
-        payload.handle = $('#handle').val();
-        payload.email = $('#email').val();
+        payload.handle = document.getElementById('handle').value;
+        payload.email = document.getElementById('email').value;
         payload.events = events.slice();
         $.ajax({
           url: 'http://localhost:51712/sink',
@@ -94,9 +95,10 @@
       }
     }
 
-    function rootOutCheaters() {
-      var cs = $('#sentinel').text().length;
-      var isCheater = isComplete() && (events.length < cs || hasPasted());
+    function rootOutCheaters(events) {
+      var cs = $('#sentinel').text().trim().length;
+      console.log(events.length);
+      var isCheater = isComplete() && (events.length < cs || hasPasted(events));
       if(isCheater) {
         console.log('You are our newest inductee into the hall of shame.');
       }
@@ -104,13 +106,14 @@
     }
 
     function isValid() {
-      var isValid = validateById('#handle') && validateById('#email');
+      var isValid = validateById('handle') && validateById('email');
       return isValid;
     }
 
     function validateById(id) {
-      if($(id).val().length == 0) {
-        $(id).addClass('error');
+      var el = document.getElementById(id);
+      if(el && el.value.length == 0) {
+        el.classList.add('error');
         return false;
       }
       return true;
@@ -122,7 +125,7 @@
       return text === input;
     }
 
-    function hasPasted() {
+    function hasPasted(events) {
       for(var i = 0; i < events.length - 1; ++i) {
         if(events[i].e == "Control" && events[i+1].e == "v") {
           return true;
@@ -141,9 +144,9 @@
     <section>
       <h4>Please enter a handle and a valid email address:</h4>
     <label>Handle</label>
-    <input id="#handle" type="text" value="" />
+    <input id="handle" type="text" value="" />
     <label>Email</label>
-    <input id="#email" type="email" />
+    <input id="email" type="email" />
     </section>
   <section>
     <h4>Please submit the following input into our Freudian Psychoanalyzer:</h4>

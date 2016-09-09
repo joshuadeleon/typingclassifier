@@ -2,9 +2,9 @@
 
 namespace ML.TypingClassifier.Models
 {
-    public class Timeline
+    public class Sample
     {
-        [JsonProperty]
+        [JsonProperty("handle")]
         public string Handle { get; set; }
         [JsonProperty("email")]
         public string Email { get; set; }
