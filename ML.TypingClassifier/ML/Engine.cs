@@ -14,6 +14,7 @@ namespace ML.TypingClassifier.ML
         public static Engine Instance { get { return Thunk.Value; } }
 
         private readonly DataAccess _data;
+        private object _sync = new object();
         private int _size;
         private double[][] _matrix;
 		private Classification _clusters;
@@ -33,14 +34,25 @@ namespace ML.TypingClassifier.ML
 			_clusters = RunKMeans(CLUSTERS);
         }
 
+        public void Refresh()
+        {
+            lock (_sync)
+            {
+                Initialize();
+            }
+        }
+
         public Classification RunKMeans(int clusters)
         {
-            var kmeans = new KMeans(clusters);
-            var clusterCollection = kmeans.Learn(_matrix);
-            return new Classification
+            lock (_sync)
             {
-                Clusters = clusterCollection
-            };
+                var kmeans = new KMeans(clusters);
+                var clusterCollection = kmeans.Learn(_matrix);
+                return new Classification
+                {
+                    Clusters = clusterCollection
+                };
+            }
         }
     }
 }
