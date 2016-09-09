@@ -1,5 +1,7 @@
 ﻿using ML.TypingClassifier.ML;
 using ML.TypingClassifier.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,6 +64,32 @@ namespace ML.TypingClassifier.Controllers
             Engine.Instance.Refresh();
             return Ok();
         }
+
+        [Route("points")]
+        public IHttpActionResult GetPoints()
+        {
+            var points = Engine.Instance.Matrix();
+            var features = new List<Feature>(5);
+            for (int i = 0; i < 5; ++i)
+            {
+                var values = new double[points.Length];
+                for (int j = 0; j < points.Length; ++j)
+                {
+                    values[j] = points[j][i];
+                }
+                features.Add(new Feature
+                {
+                    Label = FeatureNames[i],
+                    Values = values
+                });
+            }
+            return Ok(features);
+        }
+
+        private static readonly string[] FeatureNames = new[]
+        {
+            "WPM", "Backspaces", "Deletes", "AverageKeyPressDuration", "AverageTimeBetweenKeystrokes"
+        };
 
 		/// <summary>
 		/// Periodically re-calculates K-means

@@ -194,8 +194,10 @@
     <Compile Include="ML\ClusterMethods.cs" />
     <Compile Include="ML\Engine.cs" />
     <Compile Include="Models\Classification.cs" />
+    <Compile Include="Models\Cluster.cs" />
     <Compile Include="Models\ClusterResult.cs" />
     <Compile Include="Models\DataAccess.cs" />
+    <Compile Include="Models\Feature.cs" />
     <Compile Include="Models\FeatureExtractor.cs" />
     <Compile Include="Models\KeyEvent.cs" />
     <Compile Include="Models\ProfileResults.cs" />
