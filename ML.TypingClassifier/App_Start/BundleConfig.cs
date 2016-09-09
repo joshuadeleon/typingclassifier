@@ -21,7 +21,7 @@ namespace ML.TypingClassifier
 
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
 					  "~/Scripts/bootstrap.js",
-                      //"~/Scripts/c3-0.4.11/d3.min.js",
+                      "~/Scripts/c3-0.4.11/d3.v3.min.js",
                       "~/Scripts/c3-0.4.11/c3.js",
                       "~/Scripts/charts.js",
                       "~/Scripts/respond.js"));
