@@ -44,6 +44,10 @@
 				y: {
 					label: ylabel
 				}
+			},
+			size: {
+				height: 600,
+				width: 1200
 			}
 		});
 	}
