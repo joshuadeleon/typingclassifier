@@ -26,7 +26,7 @@ namespace ML.TypingClassifier
                       "~/Scripts/charts.js",
                       "~/Scripts/respond.js"));
 
-			bundles.Add(new StyleBundle("~/bundles/css").Include(
+			bundles.Add(new StyleBundle("~/Style/css").Include(
 					  "~/Content/css/bootstrap.css",
                       "~/Scripts/c3-0.4.11/c3.min.css",
                       "~/Content/css/site.css"));
