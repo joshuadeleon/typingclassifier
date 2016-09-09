@@ -25,6 +25,8 @@
         }, 1005);
       }
 
+      
+
       $('#score-btn').click(function() {
         if(rootOutCheaters(events)) {
           alert('Thanks for cheating. You are our newest inductee into the hall of shame.');
@@ -140,7 +142,7 @@
 
   </script>
 }
-<main class="container body-content">
+<main class="container body-content" id="form">
     <section>
       <h4>Please enter a handle and a valid email address:</h4>
     <label>Handle</label>
@@ -154,6 +156,6 @@
       @Model.Text
     </p>
     <textarea oncontextmenu="return false;" id="user-input" class="input"></textarea>
-    <button class="btn btn-primary" id="score-btn" disabled="true">Go to Results</button>
+    <button class="btn btn-primary" id="score-btn" disabled="true">Submit</button>
   </section>
 </main>

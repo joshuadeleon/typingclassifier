@@ -50,7 +50,7 @@ font-size:25px;
 }
 
 .btn-primary[disabled]{
-    background:#F95759;
+    background:rgba(128, 128, 128, 0.52);
     border:none;
 }
 
