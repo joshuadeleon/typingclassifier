@@ -3,12 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+using System.Web.Mvc; 
 
 namespace ML.TypingClassifier.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly DataAccess _dataAccess;
+
+		public HomeController()
+		{
+			_dataAccess = new DataAccess(Constants.ConnectionString);
+		}
+
 		public ActionResult Index()
 		{
             var sentinel = new Sentinel
@@ -72,9 +79,11 @@ namespace ML.TypingClassifier.Controllers
         }
 
 
-		public ActionResult Results()
+		public ActionResult Results(string email)
 		{
-			return View();
+			var userData = _dataAccess.Single(email);
+			var extractor = FeatureExtractor.Default(userData);
+			return View(extractor);
 		}
 	}
 }

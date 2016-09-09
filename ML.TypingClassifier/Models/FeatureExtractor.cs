@@ -23,7 +23,9 @@ namespace ML.TypingClassifier.Models
         {
             var def = new List<Func<Sample, double>>
             {
-                Extractors.WPM, Extractors.BackspaceCount, Extractors.DeleteCount,
+                Extractors.WPM,
+				Extractors.BackspaceCount,
+				Extractors.DeleteCount,
                 Extractors.AverageKeyPressDuration,
                 Extractors.AverageTimeBetweenKeyStrokes
             };

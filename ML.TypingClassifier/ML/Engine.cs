@@ -7,6 +7,7 @@ namespace ML.TypingClassifier.ML
 {
     public sealed class Engine
     {
+		private const int CLUSTERS = 3;
         private static readonly Lazy<Engine> Thunk =
             new Lazy<Engine>(() => new Engine());
 
@@ -15,6 +16,8 @@ namespace ML.TypingClassifier.ML
         private readonly DataAccess _data;
         private int _size;
         private double[][] _matrix;
+		private Classification _clusters;
+
         
         private Engine()
         {
@@ -27,6 +30,7 @@ namespace ML.TypingClassifier.ML
             var history = _data.All();
             _size = history.Count;
             _matrix = history.Select(FeatureExtractor.Default).ToArray();
+			_clusters = RunKMeans(CLUSTERS);
         }
 
         public Classification RunKMeans(int clusters)

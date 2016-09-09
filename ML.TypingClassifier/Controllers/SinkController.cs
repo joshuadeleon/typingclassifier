@@ -32,7 +32,7 @@ namespace ML.TypingClassifier.Controllers
         [Route("")]
         public IHttpActionResult Post(Sample data)
         {
-            _dataAccess.Add(data);
+            _dataAccess.Add(data);			
             return Ok(data);
         }
 

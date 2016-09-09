@@ -40,12 +40,16 @@
         payload.email = document.getElementById('email').value;
         payload.events = events.slice();
         $.ajax({
-          url: 'http://typingclassifier.azurewebsites.net/sink',
+          url: '/sink',
           type: 'POST',
           contentType: 'application/json; charset=utf-8',
           data: JSON.stringify(payload),
           dataType: 'json',
-          success: function() { events = []; clearText(); },
+          success: function () {
+          	events = []; 
+          	clearText();
+          	window.location.href = "Home/Results?email=" + payload.email;
+          },
           error: function(e) { console.log(e); },
           processData: false
         });
