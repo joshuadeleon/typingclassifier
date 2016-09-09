@@ -24,12 +24,27 @@
 	});
 
 	function render(x, y) {
+		var xlabel = x[0];
+		var ylabel = y[0];
+
 		return c3.generate({
 			bindto: '#chart',
 			data: {
 				columns: [x, y],
-				type: 'scatter'
+				type: 'scatter',
+				x: xlabel,
 			},
+			axis: {
+				x: {
+					label: xlabel,
+					tick: {
+						fit: true
+					}
+				},
+				y: {
+					label: ylabel
+				}
+			}
 		});
 	}
 
@@ -44,8 +59,13 @@
 			idsToRemove.push(oldyaxis[0]);
 		}
 
+		plot.axis.labels({ x: xaxis[0] });
+		plot.axis.labels({ y: yaxis[0] });
+		
+
 		plot.unload({ ids: idsToRemove });
-		plot.load({ columns: [xaxis, yaxis]	});
+		plot.load({ columns: [xaxis, yaxis], x: xaxis[0] });
+		
 	}
 
 	//	Redraw when x-axis changes

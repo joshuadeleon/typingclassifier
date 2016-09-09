@@ -82,7 +82,7 @@ namespace ML.TypingClassifier.Controllers
                 var values = new double[points.Length];
                 for (int j = 0; j < points.Length; ++j)
                 {
-                    values[j] = points[j][i];
+                    values[j] = System.Math.Round(points[j][i], 2);
                 }
                 features.Add(new Feature
                 {
