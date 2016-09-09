@@ -17,8 +17,7 @@ namespace ML.TypingClassifier.ML
         private object _sync = new object();
         private int _size;
         private double[][] _matrix;
-		private Classification _clusters;
-
+		public Classification KClusters { get; private set; }
         
         private Engine()
         {
@@ -31,7 +30,7 @@ namespace ML.TypingClassifier.ML
             var history = _data.All();
             _size = history.Count;
             _matrix = history.Select(FeatureExtractor.Default).ToArray();
-			_clusters = RunKMeans(CLUSTERS);
+			KClusters = RunKMeans(CLUSTERS);
         }
 
         public void Refresh()

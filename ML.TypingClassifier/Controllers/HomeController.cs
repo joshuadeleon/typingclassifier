@@ -9,7 +9,7 @@ namespace ML.TypingClassifier.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly DataAccess _dataAccess;
+		private readonly DataAccess _dataAccess;		
 
 		public HomeController()
 		{
@@ -81,9 +81,11 @@ namespace ML.TypingClassifier.Controllers
 
 		public ActionResult Results(string email)
 		{
-			var userData = _dataAccess.Single(email);
-			var extractor = FeatureExtractor.Default(userData);
-			return View(extractor);
+			var allData = _dataAccess.All();
+			var userData = allData.FirstOrDefault(x => x.Email == email);
+			var matrix = allData.Select(FeatureExtractor.Default).ToArray();
+			var profileResults = new ProfileResults(matrix, userData);
+			return View(profileResults);
 		}
 	}
 }

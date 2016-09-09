@@ -1,6 +1,8 @@
 ﻿using ML.TypingClassifier.ML;
 using ML.TypingClassifier.Models;
 using System.Web.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ML.TypingClassifier.Controllers
 {
@@ -8,10 +10,13 @@ namespace ML.TypingClassifier.Controllers
     public class SinkController : ApiController
     {
         private readonly DataAccess _dataAccess;
+		private static int _currentSubmissionCount = 0;
+		private const int REFRESH_CLUSTERS = 10;
 
-        public SinkController()
+		public SinkController()
         {
             _dataAccess = new DataAccess(Constants.ConnectionString);
+			Task.Run(() => PeriodicRefesh(CancellationToken.None));
         }
 
         [Route("")]
@@ -32,7 +37,8 @@ namespace ML.TypingClassifier.Controllers
         [Route("")]
         public IHttpActionResult Post(Sample data)
         {
-            _dataAccess.Add(data);			
+            _dataAccess.Add(data);
+			Interlocked.Increment(ref _currentSubmissionCount);					
             return Ok(data);
         }
 
@@ -56,5 +62,19 @@ namespace ML.TypingClassifier.Controllers
             Engine.Instance.Refresh();
             return Ok();
         }
-    }
+
+		/// <summary>
+		/// Periodically re-calculates K-means
+		/// </summary>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		private async Task PeriodicRefesh(CancellationToken cancellationToken)
+		{
+			while (_currentSubmissionCount > REFRESH_CLUSTERS)
+			{
+				await Task.Run(() => Engine.Instance.Refresh());
+				Interlocked.Exchange(ref _currentSubmissionCount, 0);
+			}
+		}
+	}
 }

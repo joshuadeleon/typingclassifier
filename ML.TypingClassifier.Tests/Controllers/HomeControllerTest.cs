@@ -32,7 +32,7 @@ namespace ML.TypingClassifier.Tests.Controllers
 			HomeController controller = new HomeController();
 
 			// Act
-			ViewResult result = controller.Results() as ViewResult;
+			ViewResult result = controller.Results("jane@test.com") as ViewResult;
 
 			// Assert
 			Assert.AreEqual("Your application description page.", result.ViewBag.Message);
