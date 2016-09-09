@@ -37,3 +37,19 @@ var chart = c3.generate({
         }
     }
 });
+
+//	Handles redrawing chart
+$(function () {
+	$('#chart-x-axis').on('change', function (event) {		
+		var optionSelected = $("option:selected", this);
+		var valueSelected = this.value;
+		console.log("Dropdown 1: " + valueSelected + " " + optionSelected.text());
+	});
+
+	$('#chart-y-axis').on('change', function (event, selector, data) {
+		var optionSelected = $("option:selected", this);
+		var valueSelected = this.value;
+		console.log("Dropdown 2: " + valueSelected + " " + optionSelected.text());
+	});
+});
+
